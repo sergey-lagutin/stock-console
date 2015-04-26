@@ -13,10 +13,10 @@ object Stock {
     }
   }
 
-  def withdraw(): Unit = {
+  def buy(): Unit = {
     readItemAndAmount.foreach {
       case (item, amount) =>
-        service.withdraw(item, amount) match {
+        service.buy(item, amount) match {
           case Left(leftAmount) =>
             println(s"Item [$item] was withdrawn. Left $leftAmount pcs.")
           case Right(error) =>

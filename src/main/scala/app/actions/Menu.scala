@@ -10,7 +10,7 @@ object Menu {
   private type Action = () => Unit
 
   private val customerActions: List[(String, Action)] = List(
-    ("Withdraw item", Stock.withdraw _))
+    ("Buy item", Stock.buy _))
 
   private val adminActions: List[(String, Action)] = List(
     ("Deposit item", Stock.deposit _))

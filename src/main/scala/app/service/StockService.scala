@@ -15,7 +15,7 @@ class StockService {
   def listAll: Seq[(String, Int)] =
     stock.toSeq.sortBy(_._1)
 
-  def withdraw(item: String, amount: Int): Either[Int, String] = {
+  def buy(item: String, amount: Int): Either[Int, String] = {
     stock.get(item) match {
       case Some(stockAmount) if stockAmount >= amount =>
         val newAmount = stockAmount - amount

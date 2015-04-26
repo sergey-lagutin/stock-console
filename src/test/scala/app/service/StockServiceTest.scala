@@ -21,23 +21,23 @@ class StockServiceTest extends FunSuite {
     }
   }
 
-  test("withdraw unreal item") {
+  test("buy unreal item") {
     new EmptyStock {
-      assert(Right("Item [item] not found") === withdraw("item", 10))
+      assert(Right("Item [item] not found") === buy("item", 10))
     }
   }
 
-  test("withdraw with insufficient amount") {
+  test("buy with insufficient amount") {
     new EmptyStock {
       deposit("item", 10)
-      assert(Right("Insufficient amount") === withdraw("item", 20))
+      assert(Right("Insufficient amount") === buy("item", 20))
     }
   }
 
-  test("withdraw") {
+  test("buy") {
     new EmptyStock {
       deposit("item", 10)
-      assert(Left(8) === withdraw("item", 2))
+      assert(Left(8) === buy("item", 2))
     }
   }
 
