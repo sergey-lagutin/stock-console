@@ -26,7 +26,7 @@ class StockService {
     }
   }
 
-  def deposit(item: String, amount: Int): Int = {
+  def add(item: String, amount: Int): Int = {
     val oldAmount = stock.getOrElse(item, 0)
     val newAmount = oldAmount + amount
     stock(item) = newAmount

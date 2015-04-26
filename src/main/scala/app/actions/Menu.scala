@@ -13,7 +13,7 @@ object Menu {
     ("Buy item", Stock.buy _))
 
   private val adminActions: List[(String, Action)] = List(
-    ("Deposit item", Stock.deposit _))
+    ("Add item", Stock.add _))
 
   def showMenu(user: User): Unit = {
     val userActions = user.role match {

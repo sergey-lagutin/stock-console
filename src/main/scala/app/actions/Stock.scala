@@ -6,10 +6,10 @@ object Stock {
 
   private val service = new StockService
 
-  def deposit(): Unit = {
+  def add(): Unit = {
     readItemAndAmount.foreach {
       case (item, amount) =>
-        service.deposit(item, amount)
+        service.add(item, amount)
     }
   }
 
