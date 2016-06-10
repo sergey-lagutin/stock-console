@@ -9,6 +9,22 @@ private[service] object Stock {
   )
 }
 
+class Stock(stock: Map[String, Int]) {
+  def buy(item: String, amount: Int): Stock =
+    stock.get(item) match {
+      case Some(stockAmount) if stockAmount >= amount =>
+        new Stock(stock + (item -> (stockAmount - amount)))
+      case _ =>
+        println("Insufficient amount")
+        new Stock(stock)
+    }
+
+  def add(item: String, amount: Int): Stock =
+    new Stock(stock + (item -> (stock.getOrElse(item, 0) + amount)))
+
+  def getAmount(item: String): Int = stock.getOrElse(item, 0)
+}
+
 class StockService {
 
   def listAll: Seq[(String, Int)] = stock.toSeq.sortBy(_._1)
