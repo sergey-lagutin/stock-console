@@ -11,10 +11,7 @@ private[service] object Stock {
 
 class StockService {
 
-  def listAll: Seq[(String, Int)] = {
-    val tuples = stock.toSeq
-    tuples.sortBy(_._1)
-  }
+  def listAll: Seq[(String, Int)] = stock.toSeq.sortBy(_._1)
 
   def buy(item: String, amount: Int): Either[Int, String] = {
     stock.get(item) match {
