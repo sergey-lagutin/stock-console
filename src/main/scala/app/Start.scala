@@ -9,10 +9,9 @@ object Start extends App {
   eventLoop(new Users(), new Stock(Map("item1" -> 10)))
 
   def eventLoop(holder: Users, stock: Stock): Unit = {
-    def readAction: Action = holder.currentUser match {
-      case None => AuthActions.login()
-      case Some(user) => Menu.show(user, stock)
-    }
+    def readAction: Action = holder.currentUser
+      .map(Menu.show(_, stock))
+      .getOrElse(AuthActions.login())
 
     readAction match {
       case Logout => eventLoop(holder.logout, stock)

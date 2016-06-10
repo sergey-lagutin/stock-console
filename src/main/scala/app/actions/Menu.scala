@@ -16,7 +16,7 @@ object Menu {
   private val adminActions: List[(String, ActionSource)] = List(
     ("Add item", StockActions.add _))
 
-  def show(user: User, stock : Stock): Action = {
+  def show(user: User, stock: Stock): Action = {
     val userActions = user.role match {
       case CUSTOMER => customerActions
       case ADMIN => customerActions ++ adminActions
@@ -26,17 +26,16 @@ object Menu {
 
     val menu =
       (for (((name, action), i) <- userActions.zipWithIndex)
-      yield MenuItem(name, action, (i + 1).toString)) :+ MenuItem("Logout", AuthActions.logout, "0")
+        yield MenuItem(name, action, (i + 1).toString)) :+ MenuItem("Logout", AuthActions.logout, "0")
 
     println("Available actions:")
     menu.foreach(
       item => println(s"${item.key}. ${item.name}")
     )
     val action = readString("Input menu number:")
-    menu.find(_.key == action) match {
-      case None => UnknownOperation
-      case Some(item) => item.action()
-    }
+    menu.find(_.key == action)
+      .map(_.action())
+      .getOrElse(UnknownOperation)
   }
 
 }
