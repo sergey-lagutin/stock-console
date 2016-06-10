@@ -2,19 +2,19 @@ package app.service
 
 import app.domain.{Role, User}
 
-private[service] object Users {
-  val users = List(
-    User("customer", "customer", Role.CUSTOMER),
-    User("admin", "admin", Role.ADMIN)
-  )
-}
+class Users(val currentUser: Option[User], users: List[User]) {
 
-class UserHolder(val currentUser: Option[User]) {
+  def this() {
+    this(None, List(
+      User("customer", "customer", Role.CUSTOMER),
+      User("admin", "admin", Role.ADMIN)))
+  }
+
   private[service] def findUser(username: String, password: String): Option[User] =
-    Users.users.find(u => u.username == username && u.password == password)
+    users.find(u => u.username == username && u.password == password)
 
-  def login(username: String, password: String): UserHolder =
-    new UserHolder(findUser(username, password))
+  def login(username: String, password: String): Users =
+    new Users(findUser(username, password), users)
 
-  def logout: UserHolder = new UserHolder(None)
+  def logout: Users = new Users(None, users)
 }

@@ -1,14 +1,14 @@
 package app
 
 import app.actions._
-import app.service.{Stock, UserHolder}
+import app.service.{Stock, Users}
 
 object Start extends App {
   println("Welcome to Stock application.")
 
-  eventLoop(new UserHolder(None), new Stock(Map("item1" -> 10)))
+  eventLoop(new Users(), new Stock(Map("item1" -> 10)))
 
-  def eventLoop(holder: UserHolder, stock: Stock): Unit = {
+  def eventLoop(holder: Users, stock: Stock): Unit = {
     def readAction: Action = holder.currentUser match {
       case None => AuthActions.login()
       case Some(user) => Menu.show(user, stock)
