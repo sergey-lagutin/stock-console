@@ -1,6 +1,7 @@
 package app.service
 
 import scala.collection.mutable.HashMap
+import Stock.stock
 
 private[service] object Stock {
   val stock = HashMap(
@@ -8,11 +9,12 @@ private[service] object Stock {
   )
 }
 
-import Stock.stock
-
 class StockService {
 
-  def listAll: Seq[(String, Int)] = stock.toSeq.sortBy(_._1)
+  def listAll: Seq[(String, Int)] = {
+    val tuples = stock.toSeq
+    tuples.sortBy(_._1)
+  }
 
   def buy(item: String, amount: Int): Either[Int, String] = {
     stock.get(item) match {
