@@ -15,7 +15,7 @@ object Menu {
   private val adminActions: List[(String, Action)] = List(
     ("Add item", Stock.add _))
 
-  def showMenu(user: User): Unit = {
+  def show(user: User): Unit = {
     val userActions = user.role match {
       case CUSTOMER => customerActions
       case ADMIN => customerActions ++ adminActions

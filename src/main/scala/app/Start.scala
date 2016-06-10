@@ -6,7 +6,7 @@ object Start extends App {
   println("Welcome to Stock application.")
   while (true) {
     Auth.currentUser match {
-      case Some(user) => Menu.showMenu(user)
+      case Some(user) => Menu.show(user)
       case None => Auth.login()
     }
   }
