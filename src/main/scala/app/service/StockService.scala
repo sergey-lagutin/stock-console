@@ -8,12 +8,11 @@ private[service] object Stock {
   )
 }
 
+import Stock.stock
+
 class StockService {
 
-  import Stock.stock
-
-  def listAll: Seq[(String, Int)] =
-    stock.toSeq.sortBy(_._1)
+  def listAll: Seq[(String, Int)] = stock.toSeq.sortBy(_._1)
 
   def buy(item: String, amount: Int): Either[Int, String] = {
     stock.get(item) match {
