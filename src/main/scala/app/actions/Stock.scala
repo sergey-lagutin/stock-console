@@ -1,29 +1,16 @@
 package app.actions
 
-import app.service.StockService
-
 object Stock {
 
-  private val service = new StockService
+  def add(): Action =
+    readItemAndAmount.map {
+      case (item, amount) => AddItem(item, amount)
+    }.getOrElse(UnknownOperation)
 
-  def add(): Unit = {
-    readItemAndAmount.foreach {
-      case (item, amount) =>
-        service.add(item, amount)
-    }
-  }
-
-  def buy(): Unit = {
-    readItemAndAmount.foreach {
-      case (item, amount) =>
-        service.buy(item, amount) match {
-          case Left(leftAmount) =>
-            println(s"Item [$item] was withdrawn. Left $leftAmount pcs.")
-          case Right(error) =>
-            println("Cannot withdraw: " + error)
-        }
-    }
-  }
+  def buy(): Action =
+    readItemAndAmount.map {
+      case (item, amount) => BuyItem(item, amount)
+    }.getOrElse(UnknownOperation)
 
   private val itemAndAmountRegex = "(\\w+)\\s+(\\d+)".r
 
@@ -35,13 +22,6 @@ object Stock {
       case _ =>
         println("Incorrect string format. Expected [ITEM_TYPE AMOUNT]")
         None
-    }
-  }
-
-  def showAll() = {
-    println("Current items in stock:")
-    service.listAll.foreach {
-      case (item, amount) => println(s"$item: $amount pcs.")
     }
   }
 

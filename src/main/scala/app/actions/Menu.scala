@@ -2,26 +2,27 @@ package app.actions
 
 import app.domain.User
 import app.domain.Role._
+import app.service.Stock
 
 object Menu {
 
-  private case class MenuItem(name: String, action: Action, key: String)
+  private case class MenuItem(name: String, action: ActionSource, key: String)
 
-  private type Action = () => Unit
+  private type ActionSource = () => Action
 
-  private val customerActions: List[(String, Action)] = List(
+  private val customerActions: List[(String, ActionSource)] = List(
     ("Buy item", Stock.buy _))
 
-  private val adminActions: List[(String, Action)] = List(
+  private val adminActions: List[(String, ActionSource)] = List(
     ("Add item", Stock.add _))
 
-  def show(user: User): Unit = {
+  def show(user: User, stock : Stock): Action = {
     val userActions = user.role match {
       case CUSTOMER => customerActions
       case ADMIN => customerActions ++ adminActions
     }
 
-    Stock.showAll()
+    stock.showAll()
 
     val menu =
       (for (((name, action), i) <- userActions.zipWithIndex)
@@ -33,7 +34,7 @@ object Menu {
     )
     val action = readString("Input menu number:")
     menu.find(_.key == action) match {
-      case None => println("Unknown menu number")
+      case None => UnknownOperation
       case Some(item) => item.action()
     }
   }
