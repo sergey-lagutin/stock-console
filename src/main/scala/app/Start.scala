@@ -10,7 +10,7 @@ object Start extends App {
 
   def eventLoop(holder: UserHolder, stock: Stock): Unit = {
     def readAction: Action = holder.currentUser match {
-      case None => Auth.login()
+      case None => AuthActions.login()
       case Some(user) => Menu.show(user, stock)
     }
 

@@ -1,6 +1,6 @@
 package app.actions
 
-object Stock {
+object StockActions {
 
   def add(): Action =
     readItemAndAmount.map {

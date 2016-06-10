@@ -11,10 +11,10 @@ object Menu {
   private type ActionSource = () => Action
 
   private val customerActions: List[(String, ActionSource)] = List(
-    ("Buy item", Stock.buy _))
+    ("Buy item", StockActions.buy _))
 
   private val adminActions: List[(String, ActionSource)] = List(
-    ("Add item", Stock.add _))
+    ("Add item", StockActions.add _))
 
   def show(user: User, stock : Stock): Action = {
     val userActions = user.role match {
@@ -26,7 +26,7 @@ object Menu {
 
     val menu =
       (for (((name, action), i) <- userActions.zipWithIndex)
-      yield MenuItem(name, action, (i + 1).toString)) :+ MenuItem("Logout", Auth.logout, "0")
+      yield MenuItem(name, action, (i + 1).toString)) :+ MenuItem("Logout", AuthActions.logout, "0")
 
     println("Available actions:")
     menu.foreach(

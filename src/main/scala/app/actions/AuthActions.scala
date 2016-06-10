@@ -1,6 +1,6 @@
 package app.actions
 
-object Auth {
+object AuthActions {
 
   def login(): Action = {
     println("To sign in input username and password (try customer/customer or admin/admin).")
